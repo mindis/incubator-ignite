@@ -314,8 +314,6 @@ public class GridDhtPartitionDemandPool<K, V> {
      * @return Picked owners.
      */
     private Collection<ClusterNode> pickedOwners(int p, long topVer) {
-        U.debug(">>>>>>>> pickedOwners 1");
-
         Collection<ClusterNode> affNodes = cctx.affinity().nodes(p, topVer);
 
         int affCnt = affNodes.size();
@@ -331,8 +329,6 @@ public class GridDhtPartitionDemandPool<K, V> {
 
         // Sort in descending order, so nodes with higher order will be first.
         Collections.sort(sorted, CU.nodeComparator(false));
-
-        U.debug(">>>>>>>> pickedOwners 2");
 
         // Pick newest nodes.
         return sorted.subList(0, affCnt);

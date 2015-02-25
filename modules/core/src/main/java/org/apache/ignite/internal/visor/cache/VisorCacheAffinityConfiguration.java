@@ -76,6 +76,7 @@ public class VisorCacheAffinityConfiguration implements Serializable {
         cfg.partitionedBackups(ccfg.getBackups());
         cfg.defaultReplicas(dfltReplicas);
         cfg.excludeNeighbors(excludeNeighbors);
+        cfg.partitions(aff.partitions());
 
         return cfg;
     }
