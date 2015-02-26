@@ -811,13 +811,13 @@ public class GridDhtPartitionDemandPool<K, V> {
 
         /** {@inheritDoc} */
         @Override protected void body() throws InterruptedException, IgniteInterruptedCheckedException {
-            U.debug(log, "DemandWorker " + id + " body 1");
+            U.debug(log, "DemandWorker " + id + " body enter");
 
             try {
                 int preloadOrder = cctx.config().getPreloadOrder();
 
                 if (preloadOrder > 0) {
-                    U.debug(log, "DemandWorker " + id + " body 2");
+                    U.debug(log, "DemandWorker " + id + " body preloadOrder > 0");
                     IgniteInternalFuture<?> fut = cctx.kernalContext().cache().orderedPreloadFuture(preloadOrder);
 
                     try {
@@ -841,13 +841,19 @@ public class GridDhtPartitionDemandPool<K, V> {
                     }
                 }
 
+                U.debug(log, "DemandWorker " + id + " body !(preloadOrder > 0)");
+
                 GridDhtPartitionsExchangeFuture<K, V> exchFut = null;
 
                 boolean stopEvtFired = false;
 
                 while (!isCancelled()) {
                     try {
+                        U.debug(log, "DemandWorker " + id + " body barrier.await()");
+
                         barrier.await();
+
+                        U.debug(log, "DemandWorker " + id + " body after barrier.await()");
 
                         if (id == 0 && exchFut != null && !exchFut.dummy() &&
                             cctx.events().isRecordable(EVT_CACHE_PRELOAD_STOPPED)) {
