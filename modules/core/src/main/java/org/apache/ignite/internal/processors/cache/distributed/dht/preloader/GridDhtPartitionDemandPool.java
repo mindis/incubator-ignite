@@ -109,8 +109,6 @@ public class GridDhtPartitionDemandPool<K, V> {
 
         poolSize = cctx.preloadEnabled() ? cctx.config().getPreloadThreadPoolSize() : 0;
 
-        U.debug(">>>>>>>> Pool size = " + poolSize);
-
         if (poolSize > 0) {
             barrier = new CyclicBarrier(poolSize);
 
@@ -137,22 +135,16 @@ public class GridDhtPartitionDemandPool<K, V> {
      *
      */
     void start() {
-        U.debug(">>>>>>>> Start 1");
-
         if (poolSize > 0) {
             for (DemandWorker w : dmdWorkers)
                 new IgniteThread(cctx.gridName(), "preloader-demand-worker", w).start();
         }
-
-        U.debug(">>>>>>>> Start 2");
     }
 
     /**
      *
      */
     void stop() {
-        U.debug(">>>>>>>> Stop 1");
-
         U.cancel(dmdWorkers);
 
         if (log.isDebugEnabled())
@@ -166,8 +158,6 @@ public class GridDhtPartitionDemandPool<K, V> {
         lastExchangeFut = null;
 
         lastTimeoutObj.set(null);
-
-        U.debug(">>>>>>>> Stop 2");
     }
 
     /**
@@ -207,8 +197,6 @@ public class GridDhtPartitionDemandPool<K, V> {
      * Force preload.
      */
     void forcePreload() {
-        U.debug(">>>>>>>> forcePreload 1");
-
         GridTimeoutObject obj = lastTimeoutObj.getAndSet(null);
 
         if (obj != null)
@@ -228,23 +216,14 @@ public class GridDhtPartitionDemandPool<K, V> {
         }
         else if (log.isDebugEnabled())
             log.debug("Ignoring force preload request (no topology event happened yet).");
-
-        U.debug(">>>>>>>> forcePreload 2");
     }
 
     /**
      * @return {@code true} if entered to busy state.
      */
     private boolean enterBusy() {
-        U.debug(">>>>>>>> enterBusy 1");
-
-        if (busyLock.readLock().tryLock()) {
-            U.debug(">>>>>>>> enterBusy 2 - true");
-
+        if (busyLock.readLock().tryLock())
             return true;
-        }
-
-        U.debug(">>>>>>>> enterBusy 3 - false");
 
         if (log.isDebugEnabled())
             log.debug("Failed to enter to busy state (demander is stopping): " + cctx.nodeId());
@@ -504,8 +483,6 @@ public class GridDhtPartitionDemandPool<K, V> {
          */
         private boolean preloadEntry(ClusterNode pick, int p, GridCacheEntryInfo<K, V> entry, long topVer)
             throws IgniteCheckedException {
-            U.debug("]]]]]]]]]]]]] DemandWorker " + id + "preloadEntry 1");
-            try {
             try {
                 GridCacheEntryEx<K, V> cached = null;
 
@@ -572,10 +549,6 @@ public class GridDhtPartitionDemandPool<K, V> {
             }
 
             return true;
-            }
-            finally {
-                U.debug("]]]]]]]]]]]]] DemandWorker " + id + "preloadEntry 2");
-            }
         }
 
         /**
@@ -598,7 +571,7 @@ public class GridDhtPartitionDemandPool<K, V> {
          */
         private Set<Integer> demandFromNode(ClusterNode node, final long topVer, GridDhtPartitionDemandMessage<K, V> d,
             GridDhtPartitionsExchangeFuture<K, V> exchFut) throws InterruptedException, IgniteCheckedException {
-            U.debug("]]]]]]]]]]]]] DemandWorker " + id + "demandFromNode 1");
+            U.debug(log, "DemandWorker " + id + " demandFromNode 1");
 
             GridDhtPartitionTopology<K, V> top = cctx.dht().topology();
 
@@ -820,7 +793,7 @@ public class GridDhtPartitionDemandPool<K, V> {
             }
             finally {
                 cctx.io().removeOrderedHandler(d.topic());
-                U.debug("]]]]]]]]]]]]] DemandWorker " + id + "demandFromNode 2");
+                U.debug(log, "DemandWorker " + id + " demandFromNode 2");
             }
         }
 
@@ -838,10 +811,13 @@ public class GridDhtPartitionDemandPool<K, V> {
 
         /** {@inheritDoc} */
         @Override protected void body() throws InterruptedException, IgniteInterruptedCheckedException {
+            U.debug(log, "DemandWorker " + id + " body 1");
+
             try {
                 int preloadOrder = cctx.config().getPreloadOrder();
 
                 if (preloadOrder > 0) {
+                    U.debug(log, "DemandWorker " + id + " body 2");
                     IgniteInternalFuture<?> fut = cctx.kernalContext().cache().orderedPreloadFuture(preloadOrder);
 
                     try {
@@ -976,6 +952,7 @@ public class GridDhtPartitionDemandPool<K, V> {
             finally {
                 // Safety.
                 syncFut.onWorkerDone(this);
+                U.debug(log, "DemandWorker " + id + " body 3");
             }
         }
 
