@@ -581,6 +581,9 @@ public class IgniteHadoopFileSystem extends AbstractFileSystem implements Closea
             IgfsPath dstPath = convert(dst);
             Set<IgfsMode> childrenModes = modeRslvr.resolveChildrenModes(srcPath);
 
+            if (clientLog.isLogEnabled())
+                clientLog.logRename(srcPath, modeRslvr.resolveMode(srcPath), dstPath);
+
             if (childrenModes.contains(PROXY)) {
                 if (clientLog.isLogEnabled())
                     clientLog.logRename(srcPath, PROXY, dstPath);
@@ -589,9 +592,6 @@ public class IgniteHadoopFileSystem extends AbstractFileSystem implements Closea
             }
 
             rmtClient.rename(srcPath, dstPath);
-
-            if (clientLog.isLogEnabled())
-                clientLog.logRename(srcPath, modeRslvr.resolveMode(srcPath), dstPath);
         }
         finally {
             leaveBusy();
