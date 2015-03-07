@@ -164,7 +164,7 @@ class OptimizedClassResolver {
             GridConcurrentPhantomHashSet.class,
             GridConcurrentSkipListSet.class,
             GridConcurrentWeakHashSet.class,
-            GridIdentityHashSet.class,
+            GridLeanIdentitySet.class,
             GridLeanSet.class,
             GridSetWrapper.class
         };
