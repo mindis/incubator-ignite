@@ -29,7 +29,7 @@ import static org.apache.ignite.IgniteSystemProperties.*;
  */
 public class GridConcurrentFactory {
     /** Default concurrency level. */
-    private static final int CONCURRENCY_LEVEL = IgniteSystemProperties.getInteger(IGNITE_MAP_CONCURRENCY_LEVEL, 256);
+    private static final int CONCURRENCY_LEVEL = IgniteSystemProperties.getInteger(IGNITE_MAP_CONCURRENCY_LEVEL, 16);
 
     /**
      * Ensure singleton.
