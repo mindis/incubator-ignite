@@ -18,27 +18,25 @@
 package org.apache.ignite.igfs;
 
 /**
- * {@code IGFS} exception indicating that target resource is not found.
+ * Exception indicating that directory can not be deleted because it is not empty.
  */
-public class IgfsFileNotFoundException extends IgfsInvalidPathException {
+public class IgfsDirectoryNotEmptyException extends IgfsException {
     /** */
     private static final long serialVersionUID = 0L;
 
     /**
-     * Creates exception with error message specified.
-     *
-     * @param msg Error message.
+     * @param msg Exception message.
      */
-    public IgfsFileNotFoundException(String msg) {
+    public IgfsDirectoryNotEmptyException(String msg) {
         super(msg);
     }
 
     /**
-     * Creates exception with given exception cause.
+     * Creates an instance of IGFS exception caused by nested exception.
      *
      * @param cause Exception cause.
      */
-    public IgfsFileNotFoundException(Throwable cause) {
+    public IgfsDirectoryNotEmptyException(Throwable cause) {
         super(cause);
     }
 }

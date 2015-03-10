@@ -15,14 +15,30 @@
  * limitations under the License.
  */
 
-package org.apache.ignite.internal.util;
-
-import java.io.*;
-import java.util.concurrent.*;
+package org.apache.ignite.igfs;
 
 /**
- * Adds serialization to the {@link Future} interface.
+ * {@code IGFS} exception indicating that target resource is not found.
  */
-public interface GridSerializableFuture<T> extends Future<T>, Serializable {
-    // No-op.
+public class IgfsPathNotFoundException extends IgfsInvalidPathException {
+    /** */
+    private static final long serialVersionUID = 0L;
+
+    /**
+     * Creates exception with error message specified.
+     *
+     * @param msg Error message.
+     */
+    public IgfsPathNotFoundException(String msg) {
+        super(msg);
+    }
+
+    /**
+     * Creates exception with given exception cause.
+     *
+     * @param cause Exception cause.
+     */
+    public IgfsPathNotFoundException(Throwable cause) {
+        super(cause);
+    }
 }
