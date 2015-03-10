@@ -330,7 +330,7 @@ public class IgniteHadoopIgfsSecondaryFileSystem implements IgfsSecondaryFileSys
 
             final Map<String, String> props = properties(status);
 
-            IgfsFile igfsFile = new IgfsFile() {
+            return new IgfsFile() {
                 @Override public IgfsPath path() {
                     return path;
                 }
@@ -344,7 +344,8 @@ public class IgniteHadoopIgfsSecondaryFileSystem implements IgfsSecondaryFileSys
                 }
 
                 @Override public int blockSize() {
-                    return (int)status.getBlockSize();
+                    // By convention directory has blockSize == 0, while file has blockSize > 0:
+                    return isDirectory() ? 0 : (int)status.getBlockSize();
                 }
 
                 @Override public long groupBlockSize() {
@@ -383,11 +384,6 @@ public class IgniteHadoopIgfsSecondaryFileSystem implements IgfsSecondaryFileSys
                     return props;
                 }
             };
-
-            // By convention directory has blockSize == 0, while file has blockSize > 0:
-            assert igfsFile.isDirectory() == (igfsFile.blockSize() == 0);
-
-            return igfsFile;
         }
         catch (FileNotFoundException ignore) {
             return null;

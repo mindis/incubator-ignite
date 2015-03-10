@@ -702,7 +702,8 @@ public class IgniteHadoopFileSystem extends FileSystem {
                 }
                 catch (IOException ioe) {
                     // Log the exception before rethrowing since it may be ignored:
-                    LOG.warn("Failed to rename [srcPath="+srcPath+", dstPath="+dstPath+", mode="+mode+"]: ", ioe);
+                    LOG.warn("Failed to rename [srcPath=" + srcPath + ", dstPath=" + dstPath + ", mode=" + mode + ']',
+                        ioe);
 
                     throw ioe;
                 }
