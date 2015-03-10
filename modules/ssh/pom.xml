@@ -31,13 +31,13 @@
     </parent>
 
     <artifactId>ignite-ssh</artifactId>
-    <version>1.0.0-RELEASE-TEST-SNAPSHOT</version>
+    <version>1.0.1-RELEASE-TEST-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.ignite</groupId>
             <artifactId>ignite-core</artifactId>
-            <version>1.0.0-RELEASE-TEST-SNAPSHOT</version>
+            <version>1.0.1-RELEASE-TEST-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -49,27 +49,23 @@
         <dependency>
             <groupId>org.apache.ignite</groupId>
             <artifactId>ignite-spring</artifactId>
-            <version>1.0.0-RELEASE-TEST-SNAPSHOT</version>
+            <version>1.0.1-RELEASE-TEST-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.ignite</groupId>
             <artifactId>ignite-log4j</artifactId>
-            <version>1.0.0-RELEASE-TEST-SNAPSHOT</version>
+            <version>1.0.1-RELEASE-TEST-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.ignite</groupId>
             <artifactId>ignite-core</artifactId>
-            <version>1.0.0-RELEASE-TEST-SNAPSHOT</version>
+            <version>1.0.1-RELEASE-TEST-SNAPSHOT</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-  <scm>
-    <tag>ignite-release-test-i-1-branch</tag>
-  </scm>
 </project>

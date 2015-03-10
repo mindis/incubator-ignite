@@ -31,13 +31,13 @@
     </parent>
 
     <artifactId>ignite-slf4j</artifactId>
-    <version>1.0.0-RELEASE-TEST-SNAPSHOT</version>
+    <version>1.0.1-RELEASE-TEST-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.ignite</groupId>
             <artifactId>ignite-core</artifactId>
-            <version>1.0.0-RELEASE-TEST-SNAPSHOT</version>
+            <version>1.0.1-RELEASE-TEST-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -46,8 +46,4 @@
             <version>1.6.4</version>
         </dependency>
     </dependencies>
-
-  <scm>
-    <tag>ignite-release-test-i-1-branch</tag>
-  </scm>
 </project>
